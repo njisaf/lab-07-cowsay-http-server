@@ -26,11 +26,11 @@ const server = http.createServer(function(req, res){
   if(req.method === 'GET' && req.url.pathname === '/cowsay') {
     if (!req.url.query.text) {
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=howdy'}));
+      res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=howdy', f: req.url.query.f}));
       res.end();
     } else if (req.url.query.text) {
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.write(cowsay.say(req.url.query));
+      res.write(cowsay.say({text: req.url.query.text, f: req.url.query.f}));
       res.end();
     }
   }
@@ -40,17 +40,17 @@ const server = http.createServer(function(req, res){
       console.log('bodyParser req body: ', req.body);
       if (err) {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request\ntry: including a JSON file with {text: message}'}));
+        res.write(cowsay.say({text: 'bad request\ntry: including a JSON file with {text: message}', f: req.url.query.f}));
         console.error('ERROR ERROR: bodyParser callbacking an error');
         res.end();
       } else if (!req.body.text) {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request\ntry: include a "text" parameter in your JSON file'}));
+        res.write(cowsay.say({text: 'bad request\ntry: include a "text" parameter in your JSON file', f: req.url.query.f}));
         res.end();
       } else if (req.body.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         var bodytext = req.body.text;
-        res.write(cowsay.say({text: bodytext}));
+        res.write(cowsay.say({text: bodytext, f: req.url.query.f}));
         res.end();
       }
     });
