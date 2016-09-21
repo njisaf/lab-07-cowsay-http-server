@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 const server = http.createServer(function(req, res){
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
+  console.log('query', req.url.query);
 
   if (req.url.pathname === '/') {
     res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -26,7 +27,7 @@ const server = http.createServer(function(req, res){
   if(req.method === 'GET' && req.url.pathname === '/cowsay') {
     if (!req.url.query.text) {
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write(cowsay.say({text: 'bad request\ntry: localhost:3000/cowsay?text=howdy', f: req.url.query.f}));
+      res.write(cowsay.say({text: 'bad request\ntry: http localhost:3000/cowsay text==howdy', f: req.url.query.f}));
       res.end();
     } else if (req.url.query.text) {
       res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -45,7 +46,7 @@ const server = http.createServer(function(req, res){
         res.end();
       } else if (!req.body.text) {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request\ntry: include a "text" parameter in your JSON file', f: req.url.query.f}));
+        res.write(cowsay.say({text: 'bad request\ntry: including a "text" parameter in your JSON file', f: req.url.query.f}));
         res.end();
       } else if (req.body.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
