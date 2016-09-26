@@ -6,17 +6,13 @@ const url = require('url');
 function start(route, handle) {
 
   function onRequest(req, res){
-    let pathname = url.parse(req.url).pathname;
-    console.log('Request for ' + pathname + ' received...');
-
-
-    res.writeHead(200, {'Content-type': 'text/plain'});
-
-    route(handle, pathname, res);
+    let pathName = url.parse(req.url).pathname;
+    console.log('Req for ' + pathName + 'req\'d');
+    route(handle, pathName, res, req);
   }
 
   http.createServer(onRequest).listen(8888);
-  console.log('Server has started.');
+  console.log('Server has BEGUN');
 }
 
 exports.start = start;

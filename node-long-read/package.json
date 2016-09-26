@@ -15,5 +15,8 @@
     "gulp-eslint": "^3.0.1",
     "gulp-mocha": "^3.0.1",
     "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "formidable": "^1.0.17"
   }
 }
